@@ -1,8 +1,5 @@
-import io
 import streamlit as st
 from PIL import Image
-import requests
-import numpy as np
 import torch
 from torch import nn
 from transformers import SegformerImageProcessor, SegformerForSemanticSegmentation
