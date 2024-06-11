@@ -1,7 +1,6 @@
-import io
 from PIL import Image
 import pytest
-from main import preprocess_image, process_and_display
+from main import preprocess_image
 
 
 @pytest.fixture
