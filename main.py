@@ -1,4 +1,5 @@
 # main.py
+
 """
 Face Parsing App
 This application allows users to upload a photo of a person and perform semantic segmentation of the face.
@@ -11,11 +12,21 @@ from torch import nn
 from transformers import SegformerImageProcessor, SegformerForSemanticSegmentation
 import matplotlib.pyplot as plt
 
+def load_model():
+    """
+    Load the face parsing model and image processor.
+
+    Returns:
+        Tuple: (image_processor, model, device)
+    """
+    device = "cuda" if torch.cuda.is_available() else "cpu"
+    image_processor = SegformerImageProcessor.from_pretrained("jonathandinu/face-parsing")
+    model = SegformerForSemanticSegmentation.from_pretrained("jonathandinu/face-parsing")
+    model.to(device)
+    return image_processor, model, device
+
 # Load models
-device = "cuda" if torch.cuda.is_available() else "cpu"
-image_processor = SegformerImageProcessor.from_pretrained("jonathandinu/face-parsing")
-model = SegformerForSemanticSegmentation.from_pretrained("jonathandinu/face-parsing")
-model.to(device)
+image_processor, model, device = load_model()
 
 def preprocess_image(img: Image.Image) -> Image.Image:
     """
@@ -61,4 +72,3 @@ if uploaded_file is not None:
     result = st.button("Process Image")
     if result:
         process_and_display(preprocessed_image)
-
