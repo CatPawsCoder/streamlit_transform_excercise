@@ -12,6 +12,7 @@ from torch import nn
 from transformers import SegformerImageProcessor, SegformerForSemanticSegmentation
 import matplotlib.pyplot as plt
 
+
 def load_model():
     """
     Load the face parsing model and image processor.
@@ -20,13 +21,19 @@ def load_model():
         Tuple: (image_processor, model, device)
     """
     device = "cuda" if torch.cuda.is_available() else "cpu"
-    image_processor = SegformerImageProcessor.from_pretrained("jonathandinu/face-parsing")
-    model = SegformerForSemanticSegmentation.from_pretrained("jonathandinu/face-parsing")
+    image_processor = SegformerImageProcessor.from_pretrained(
+        "jonathandinu/face-parsing"
+    )
+    model = SegformerForSemanticSegmentation.from_pretrained(
+        "jonathandinu/face-parsing"
+    )
     model.to(device)
     return image_processor, model, device
 
+
 # Load models
 image_processor, model, device = load_model()
+
 
 def preprocess_image(img: Image.Image) -> Image.Image:
     """
@@ -40,6 +47,7 @@ def preprocess_image(img: Image.Image) -> Image.Image:
     """
     img = img.resize((512, 512))
     return img
+
 
 def process_and_display(image: Image.Image):
     """
@@ -60,6 +68,7 @@ def process_and_display(image: Image.Image):
     ax.imshow(labels)
     ax.axis("off")
     st.pyplot(fig)
+
 
 st.title("Face Parsing App")
 uploaded_file = st.file_uploader(label="Upload an image", type=["jpg", "png"])
